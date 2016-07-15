@@ -80,6 +80,15 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	$http.get("php/getEventsSQL.php").success (function (data){
 		$scope.events = data;
 	});
+
+	$scope.showButton = function(organizer){
+		if($scope.user == organizer){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
 }]);
 
 
