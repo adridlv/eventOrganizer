@@ -6,23 +6,37 @@ app.config(['$routeProvider',function($routeProvider) {
 		templateUrl: "views/events.html",
 		controller: "dataManager"
 	})
-	.when("/register",{
+	.when("/register-user",{
 		templateUrl: "views/registerUser.html",
-		controller: "registerManager"
+		controller: "registerUserManager"
 	})
 	.when("/login", {
 		templateUrl: "views/login.html",
 		controller: "loginManager"
+	})
+	.when("/register-event",{
+		templateUrl: "views/registerEvent.html",
+		controller: "registerEventManager"
 	})
 	.otherwise({
 		redirectTo: "/"
 	})
 }]);
 
-app.controller('registerManager',function ($scope,$http){
+app.controller('registerUserManager',function ($scope,$http){
 	$scope.message = "";
 	$scope.addNewUser = function(add){
-		$http.post("php/register.php",{'username': $scope.user.username, 'password': $scope.user.password})
+		$http.post("php/registerUser.php",{'username': $scope.user.username, 'password': $scope.user.password})
+		.success(function(data, status, headers, config){
+			$scope.message = data;
+		});
+	};   
+});
+
+app.controller('registerEventManager',function ($scope,$http){
+	$scope.message = "";
+	$scope.addNewEvent = function(add){
+		$http.post("php/registerEvent.php",{'name': $scope.event.name, 'description': $scope.event.description, 'price': $scope.event.price, 'places': $scope.event.places})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
 		});

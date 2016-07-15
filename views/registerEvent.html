@@ -1,0 +1,9 @@
+<form action="" method="POST">
+	Name: <input type="text" ng-model="event.name" name="name"><br />	
+	Description: <input type="text" ng-model="event.description" name="description"><br />
+	Price: <input type="text" ng-model="event.price" name="price"><br />	
+	Number of places: <input type="text" ng-model="event.places" name="places"><br />	
+	<!-- <input type="submit" value="Register" name="submit" /> -->
+	<button type="button" data-ng-click="addNewEvent()" name="add">Register Event</button>
+</form>
+{{message}}
