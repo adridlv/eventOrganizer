@@ -18,6 +18,10 @@ app.config(['$routeProvider',function($routeProvider) {
 		templateUrl: "views/registerEvent.html",
 		controller: "registerEventManager"
 	})
+	.when("/event/:name",{
+		templateUrl: "views/event.html",
+		controller:"eventManager"
+	})
 	.otherwise({
 		redirectTo: "/"
 	})
@@ -52,17 +56,31 @@ app.controller('loginManager',function ($scope,$http,$sessionStorage){
 			$scope.message = data;
 			if(data == "true"){
 				$sessionStorage.UserConnected = {"username": $scope.user.username};
-
 			}
 		});
 	};   
 });
+
 app.controller('dataManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
 
-	$scope.user = $sessionStorage.UserConnected.username;
 	$http.get("php/getEventsSQL.php").success (function (data){
 		$scope.events = data;
 	});
 }]);
+
+app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams', function($scope,$http, $sessionStorage,$routeParams){
+	
+	if($sessionStorage.UserConnected)
+		$scope.user = $sessionStorage.UserConnected.username; 
+	else
+		$scope.user = false;
+
+	$scope.eventName = $routeParams.name;
+
+	$http.get("php/getEventsSQL.php").success (function (data){
+		$scope.events = data;
+	});
+}]);
+
 
 
