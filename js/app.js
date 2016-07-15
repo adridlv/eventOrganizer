@@ -22,7 +22,7 @@ app.config(['$routeProvider',function($routeProvider) {
 app.controller('registerManager',function ($scope,$http){
 	$scope.message = "";
 	$scope.addNewUser = function(add){
-		$http.post("register.php",{'username': $scope.user.username, 'password': $scope.user.password})
+		$http.post("php/register.php",{'username': $scope.user.username, 'password': $scope.user.password})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
 		});
@@ -32,7 +32,7 @@ app.controller('registerManager',function ($scope,$http){
 app.controller('loginManager',function ($scope,$http,$sessionStorage){
 	$scope.message = "";
 	return $scope.login = function(){
-		$http.post("login.php",{'username': $scope.user.username, 'password': $scope.user.password})
+		$http.post("php/login.php",{'username': $scope.user.username, 'password': $scope.user.password})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
 			if(data == "true"){
@@ -43,7 +43,7 @@ app.controller('loginManager',function ($scope,$http,$sessionStorage){
 });
 app.controller('dataManager',['$scope','$http', function($scope,$http){
 
-	$http.get("getDataSQL.php").success (function (data){
+	$http.get("php/getDataSQL.php").success (function (data){
 		$scope.users = data;
 	});
 }]);
