@@ -81,13 +81,54 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 		$scope.events = data;
 	});
 
-	$scope.showButton = function(organizer){
-		if($scope.user == organizer){
+	$scope.checkIfSuscribed = function(){
+		$http.post("php/checkIfSubscribed.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
+		.success (function (data){
+			$scope.isSuscribed = data;
+		});	
+	}
+
+	$scope.checkIfHasPlaces = function(){
+		$http.post("php/checkIfHasPlaces.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
+		.success (function (data){
+			$scope.hasPlaces = data;
+		});	
+	}
+
+	$scope.checkIfHasPlaces();
+	$scope.checkIfSuscribed();
+
+	$scope.showButton = function(organizer, unsub){
+
+		if(unsub){
+			if(!$scope.hasPlaces || $scope.user == organizer || !$scope.user || !$scope.isSuscribed)
+				return true;
+			else
+				return false;
+		}
+		else if($scope.user == organizer || !$scope.user || $scope.isSuscribed || !$scope.hasPlaces)
 			return false;
-		}
-		else{
+		else
 			return true;
-		}
+		
+	}
+
+	$scope.subscribe = function(){
+		$http.post("php/subscribe.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
+		.success(function(data, status, headers, config){
+			$scope.message = data;
+			$scope.checkIfHasPlaces();
+			$scope.checkIfSuscribed();
+		});
+	}
+
+	$scope.unsubscribe = function(){
+		$http.post("php/unsubscribe.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
+		.success(function(data, status, headers, config){
+			$scope.message = data;
+			$scope.checkIfHasPlaces();
+			$scope.checkIfSuscribed();
+		});
 	}
 }]);
 

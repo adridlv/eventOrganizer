@@ -1,5 +1,8 @@
 <div ng-repeat="event in events | filter: {name: eventName}:true">
 	{{event}}
-	<button ng-show="showButton(event.organizer)">Prueba 1 usuario logeado</button>
 
+	<button ng-show="showButton(event.organizer, false)" data-ng-click="subscribe()">Subscribe to event</button>
+	<button ng-hide="showButton(event.organizer, true)" data-ng-click="unsubscribe()">Unsubscribe to event</button>
+	{{message}}
+	{{hasPlaces}}
 </div>
