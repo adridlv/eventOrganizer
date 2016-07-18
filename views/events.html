@@ -1,4 +1,9 @@
-<div ng-repeat="event in events">
-	{{event}}
-	<a href="#/event/{{event.name}}">See more</a>
+<div ng-repeat="event in events| filter: {category: music}">
+	<div class="event">
+		<h2>{{event.name | uppercase}}</h2>
+		<p class="event-category">Category: {{event.category}}</p>
+		<p class="event-places">Places: {{event.places}}</p>
+		<p class="event-organizer">Organizer: {{event.organizer}}</p>
+		<a href="#/event/{{event.name}}">See more</a>
+	</div>
 </div>

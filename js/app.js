@@ -27,7 +27,7 @@ app.config(['$routeProvider',function($routeProvider) {
 	})
 }]);
 
-app.controller('registerUserManager',function ($scope,$http){
+app.controller('registerUserManager', ['$scope','$http',function ($scope,$http){
 	$scope.message = "";
 	$scope.addNewUser = function(add){
 		$http.post("php/registerUser.php",{'username': $scope.user.username, 'password': $scope.user.password})
@@ -35,9 +35,18 @@ app.controller('registerUserManager',function ($scope,$http){
 			$scope.message = data;
 		});
 	};   
-});
+}]);
 
-app.controller('registerEventManager',function ($scope,$http, $sessionStorage){
+app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$location', function ($scope,$http, $sessionStorage,$location){
+	
+	if($sessionStorage.UserConnected)
+		$scope.user = $sessionStorage.UserConnected.username; 
+	else
+		$scope.user = false;
+
+	if(!$scope.user){
+		$location.url("/");
+	}
 	$scope.message = "";
 	
 	$scope.addNewEvent = function(add){
@@ -46,9 +55,9 @@ app.controller('registerEventManager',function ($scope,$http, $sessionStorage){
 			$scope.message = data;
 		});
 	};   
-});
+}]);
 
-app.controller('loginManager',function ($scope,$http,$sessionStorage){
+app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location', function ($scope,$http,$sessionStorage, $location){
 	$scope.message = "";
 	$scope.login = function(){
 		$http.post("php/login.php",{'username': $scope.user.username, 'password': $scope.user.password})
@@ -56,10 +65,11 @@ app.controller('loginManager',function ($scope,$http,$sessionStorage){
 			$scope.message = data;
 			if(data == "true"){
 				$sessionStorage.UserConnected = {"username": $scope.user.username};
+				$location.url("/");
 			}
 		});
 	};   
-});
+}]);
 
 app.controller('dataManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
 
@@ -102,7 +112,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	$scope.showButton = function(organizer, unsub){
 
 		if(unsub){
-			if($scope.hasPlaces || $scope.user == organizer || !$scope.user || !$scope.isSuscribed)
+			if($scope.user == organizer || !$scope.user || !$scope.isSuscribed)
 				return true;
 			else
 				return false;
@@ -132,6 +142,30 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 		});
 	}
 }]);
+
+app.controller('HeaderManager', ['$scope', '$sessionStorage', function($scope, $sessionStorage){
+	$scope.checkIfLogged = function(){
+		if($sessionStorage.UserConnected)
+			$scope.user = $sessionStorage.UserConnected.username; 
+		else
+			$scope.user = false;
+
+		return $scope.user;
+	}
+
+	$scope.logout = function(){
+		delete $sessionStorage.UserConnected;
+	}
+
+	$scope.checkIfLogged();
+}]);
+
+app.directive("evtHeader", function(){
+	return {
+		restrict: "E",
+		templateUrl: "views/headerDirective.html"
+	}
+});
 
 
 
