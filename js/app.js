@@ -91,7 +91,8 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	$scope.checkIfHasPlaces = function(){
 		$http.post("php/checkIfHasPlaces.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
 		.success (function (data){
-			$scope.hasPlaces = data;
+			$scope.prueba2 = data;
+			$scope.hasPlaces = data.hasPlaces;
 		});	
 	}
 
@@ -101,7 +102,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	$scope.showButton = function(organizer, unsub){
 
 		if(unsub){
-			if(!$scope.hasPlaces || $scope.user == organizer || !$scope.user || !$scope.isSuscribed)
+			if($scope.hasPlaces || $scope.user == organizer || !$scope.user || !$scope.isSuscribed)
 				return true;
 			else
 				return false;
