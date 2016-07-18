@@ -27,7 +27,15 @@ app.config(['$routeProvider',function($routeProvider) {
 	})
 }]);
 
-app.controller('registerUserManager', ['$scope','$http',function ($scope,$http){
+app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$location', function ($scope,$http,$sessionStorage,$location){
+	if($sessionStorage.UserConnected)
+		$scope.user = $sessionStorage.UserConnected.username; 
+	else
+		$scope.user = false;
+
+	if($scope.user){
+		$location.url("/");
+	}
 	$scope.message = "";
 	$scope.addNewUser = function(add){
 		$http.post("php/registerUser.php",{'username': $scope.user.username, 'password': $scope.user.password})
@@ -58,6 +66,16 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 }]);
 
 app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location', function ($scope,$http,$sessionStorage, $location){
+	
+	if($sessionStorage.UserConnected)
+		$scope.user = $sessionStorage.UserConnected.username; 
+	else
+		$scope.user = false;
+
+	if($scope.user){
+		$location.url("/");
+	}
+
 	$scope.message = "";
 	$scope.login = function(){
 		$http.post("php/login.php",{'username': $scope.user.username, 'password': $scope.user.password})
