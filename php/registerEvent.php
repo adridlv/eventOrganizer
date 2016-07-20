@@ -6,6 +6,11 @@ $description = mysql_real_escape_string($data->description);
 $name = mysql_real_escape_string($data->name);
 $price = mysql_real_escape_string($data->price);
 $places = mysql_real_escape_string($data->places);
+$image = mysql_real_escape_string($data->image);
+$imagebckg = mysql_real_escape_string($data->imagebckg);
+
+$imageSQL = "img"."_".$name."_".$image;
+$imageBckgSQL = "bckg"."_".$name."_".$imagebckg;
 
 mysql_connect("localhost", "root", "") or die(mysql_error()); 
 mysql_select_db("events_organizer_db") or die(mysql_error());
@@ -15,11 +20,11 @@ $numrows=mysql_num_rows($query);
 
 if($numrows==0)
 {
-	mysql_query("INSERT INTO EVENTS (description,name,price,places, organizer) VALUES ('$description', '$name', '$price', '$places', '$user')");
+	mysql_query("INSERT INTO EVENTS (description,name,price,places,organizer,image, image_background) VALUES ('$description', '$name', '$price', '$places', '$user', '$imageSQL', '$imageBckgSQL')");
 
-	$message = "SUCCESS";
+	$message = true;
 }else{
-	$message = "FAIL";
+	$message = false;
 }
 	echo $message;
 ?>

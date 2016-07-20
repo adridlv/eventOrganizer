@@ -7,3 +7,32 @@ body {
 main{
 	flex: 1 0 auto;
 }
+
+.event{
+	border:1px solid black;
+	padding:0;
+	height:11em;
+}
+
+.event .event-container-text{
+	display:inline-block;
+	vertical-align: top;
+	width:79.5%;
+}
+
+.event .event-see-more{
+	display:inline-block;
+	vertical-align: top;
+	width:19.5%;
+	line-height: 11em;
+	text-align:center;
+}
+
+.evt-txtover{
+	width:99%;
+	padding-right:1%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color:white;
+}

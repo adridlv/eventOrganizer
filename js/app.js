@@ -1,4 +1,4 @@
-var app = angular.module('dataEvents',['ngRoute', 'ngStorage']);//en el array inyectamos dependencias
+var app = angular.module('dataEvents',['ngRoute', 'ngStorage', 'ngFileUpload']);//en el array inyectamos dependencias
 
 app.config(['$routeProvider',function($routeProvider) {
 	$routeProvider
@@ -45,7 +45,7 @@ app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$loc
 	};   
 }]);
 
-app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$location', function ($scope,$http, $sessionStorage,$location){
+app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$location','Upload', function ($scope,$http, $sessionStorage,$location, Upload){
 	
 	if($sessionStorage.UserConnected)
 		$scope.user = $sessionStorage.UserConnected.username; 
@@ -57,12 +57,29 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 	}
 	$scope.message = "";
 	
+
+	$scope.upload = function (file, eventName, type) {
+		Upload.upload({
+			url: 'php/uploadImage.php', 
+			method: 'POST',
+			file: file,
+			data: {
+				'event_name': eventName,
+				'type': type
+			}
+		})
+	};
+
 	$scope.addNewEvent = function(add){
-		$http.post("php/registerEvent.php",{'user': $sessionStorage.UserConnected.username, 'name': $scope.event.name, 'description': $scope.event.description, 'price': $scope.event.price, 'places': $scope.event.places})
+		$http.post("php/registerEvent.php",{'user': $sessionStorage.UserConnected.username, 'name': $scope.event.name, 'description': $scope.event.description, 'price': $scope.event.price, 'places': $scope.event.places, 'image':$scope.file.name, 'imagebckg':$scope.filebckg.name})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
+			if($scope.message){
+				$scope.upload($scope.file, $scope.event.name, "img");
+				$scope.upload($scope.filebckg, $scope.event.name,"bckg");
+			}
 		});
-	};   
+	};
 }]);
 
 app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location', function ($scope,$http,$sessionStorage, $location){

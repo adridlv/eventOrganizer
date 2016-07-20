@@ -4,6 +4,19 @@
 	Price: <input type="text" ng-model="event.price" name="price"><br />	
 	Number of places: <input type="text" ng-model="event.places" name="places"><br />	
 	<!-- <input type="submit" value="Register" name="submit" /> -->
+
+	<div class="button drop-box" ngf-drop ngf-select ng-model="filebckg" name="filebckg" ngf-pattern="'image/*'"
+    ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" 
+    ngf-resize="{width: 200, height: 200}">Drag and drop an image for the background</div>
+    Background preview: <img ngf-src="filebckg">
+
+	<div class="button drop-box" ngf-drop ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+    ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" 
+    ngf-resize="{width: 200, height: 200}">Drag and drop an image</div>
+    Image preview: <img ngf-src="file">
+
+    
+
 	<button type="button" data-ng-click="addNewEvent()" name="add">Register Event</button>
 </form>
 {{message}}

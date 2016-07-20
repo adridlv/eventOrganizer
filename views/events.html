@@ -1,9 +1,15 @@
 <div ng-repeat="event in events| filter: {category: music}">
-	<div class="event">
-		<h2>{{event.name | uppercase}}</h2>
-		<p class="event-category">Category: {{event.category}}</p>
-		<p class="event-places">Places: {{event.places}}</p>
-		<p class="event-organizer">Organizer: {{event.organizer}}</p>
-		<a href="#/event/{{event.name}}">See more</a>
+	<div class="event col-md-6"  ng-style="{'background-image':'url(upload/{{event.image_background}})'}">
+		
+		<div class="event-see-more">
+			<a href="#/event/{{event.name}}">See more</a>
+		</div>
+		<div class="event-container-text">
+			<h2 class="event-name evt-txtover">{{event.name | uppercase}}</h2>
+			<p class="event-category evt-txtover">Category: {{event.category}}</p>
+			<p class="event-places evt-txtover">Places: {{event.places}}</p>
+			<p class="event-organizer evt-txtover">Organizer: {{event.organizer}}</p>
+		</div>
+		
 	</div>
 </div>
