@@ -83,8 +83,8 @@ fieldset label {
 }
 
 .drop-box {
-    background: #F8F8F8;
     border: 5px dashed #DDD;
+    border-radius:.8em;
     width: 170px;
     text-align: center;
     padding: 50px 10px;
@@ -96,7 +96,7 @@ fieldset label {
 }
 
 .drop-box.dragover {
-    border: 5px dashed blue;
+    border: 5px dashed #0C96CA;
 }
 
 .drop-box.dragover-err {

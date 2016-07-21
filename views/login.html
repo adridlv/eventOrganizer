@@ -1,8 +1,10 @@
-<form action="" method="POST">
-	Username: <input type="text" ng-model="user.username" name="user"><br />
-	Password: <input type="password" ng-model="user.password" name="pass"><br />	
-	<!-- <input type="submit" value="Register" name="submit" /> -->
-	<button type="button" data-ng-click="login()" name="add">Login</button>
-</form>
-<a href="#/register-user">Register user</a>
-{{message}}
+<div class="container">
+	<form action="" method="POST">
+		Username: <input type="text" ng-model="user.username" name="user"><br />
+		Password: <input type="password" ng-model="user.password" name="pass"><br />	
+		<!-- <input type="submit" value="Register" name="submit" /> -->
+		<button type="button" class="btn btn-primary" data-ng-click="login()" name="add">Login</button>
+	</form>
+	<a href="#/register-user">Register user</a>
+	{{message}}
+</div>

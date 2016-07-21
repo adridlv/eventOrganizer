@@ -1,9 +1,37 @@
-<div ng-repeat="event in events | filter: {name: eventName}:true">
-	{{event}}
 
-	<button ng-show="showButton(event.organizer, false)" data-ng-click="subscribe()">Subscribe to event</button>
-	<button ng-hide="showButton(event.organizer, true)" data-ng-click="unsubscribe()">Unsubscribe to event</button>
-	{{message}}
-	{{prueba2}}
-	{{hasPlaces}}
+<div ng-repeat="event in events | filter: {name: eventName}:true">
+	
+	
+	<div class="evt-header-container" ng-style="{'background-image': 'url(upload/{{event.image}})'}">
+		
+	</div>
+	
+	<div class="container">
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+	<h2>{{event.name | uppercase}}</h2>
+	<p>{{event.description}}</p>
+
+		<button ng-show="showButton(event.organizer, false)" data-ng-click="subscribe()">Subscribe to event</button>
+		<button ng-hide="showButton(event.organizer, true)" data-ng-click="unsubscribe()">Unsubscribe to event</button>
+		{{message}}
+		{{prueba2}}
+		{{hasPlaces}}
+	</div>
 </div>

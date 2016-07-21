@@ -71,7 +71,17 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 	};
 
 	$scope.addNewEvent = function(add){
-		$http.post("php/registerEvent.php",{'user': $sessionStorage.UserConnected.username, 'name': $scope.event.name, 'description': $scope.event.description, 'price': $scope.event.price, 'places': $scope.event.places, 'image':$scope.file.name, 'imagebckg':$scope.filebckg.name})
+		$http.post("php/registerEvent.php",
+		{
+			'user': $sessionStorage.UserConnected.username, 
+			'name': $scope.event.name, 
+			'description': $scope.event.description, 
+			'price': $scope.event.price, 
+			'places': $scope.event.places,
+			'category':$scope.event.category, 
+			'image':$scope.file.name, 
+			'imagebckg':$scope.filebckg.name
+		})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
 			if($scope.message){

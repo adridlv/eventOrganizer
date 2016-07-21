@@ -13,7 +13,7 @@
 	</header>
 
 	<main>
-		<div class="container" ng-view>
+		<div class="container-fluid container-main-view" ng-view>
 
 		</div>
 	</main>
