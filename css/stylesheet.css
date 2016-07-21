@@ -158,6 +158,7 @@ main{
 
 .evt-img-preview{
 	max-width:15em;
+	max-height:15em;
 	margin:1em;
 }
 
@@ -165,17 +166,52 @@ main{
 	padding:0;
 	color:white;
 }
+.event-view{
+	font-size:18px;
+}
+.evt-key-number{
+	display:inline-block;
+	margin:2em;
+}
 
-input{
+.evt-upper-text{
+	font-size: 60px;
+    height: 60px;
+    line-height: 60px;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.evt-lower-text{
+	color:#0C96CA;
+}
+.form-control{
 	color:white;
-	border-radius:2em;
-	padding-left:1em;
+	border-radius:.8em;
 	background-color:transparent;
 	border:1px solid #0C96CA;
 	outline:none;
 }
 
+select option{
+	color:black;
+}
 
+.evt-drag-image{
+	text-align:center;
+}
+
+.evt-drag-image label{
+	display:block;
+}
+
+.evt-drag-image div{
+	display:inline-block;
+}
+
+.fake-button{
+	vertical-align: bottom;
+}
 
 .evt-header-container{
 	min-height:20em;
@@ -183,4 +219,31 @@ input{
 	background-attachment: fixed;
 	background-size: 100%;
     background-repeat: no-repeat;
+}
+
+.button-submit button{
+	margin-top:5em;
+	margin-bottom:2em;
+}
+
+.event-separator{
+	padding-bottom:1em;
+	position: relative;
+}
+
+.event-separator::after{
+	content: "";
+    display: block;
+    width: 20em;
+    height: 1px;
+    background-color: white;
+    bottom:5px;
+    position: absolute;
+    left: 50%;
+    transform:translateX(-50%);
+}
+
+.event-separator-left{
+	border-left:2px solid #00394F;
+	padding-left:1em;
 }

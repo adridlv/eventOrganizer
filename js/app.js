@@ -146,7 +146,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	$scope.checkIfHasPlaces = function(){
 		$http.post("php/checkIfHasPlaces.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
 		.success (function (data){
-			$scope.prueba2 = data;
+			$scope.places = data;
 			$scope.hasPlaces = data.hasPlaces;
 		});	
 	}

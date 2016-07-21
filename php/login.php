@@ -12,7 +12,7 @@ $numrows=mysql_num_rows($query);
 
 if($numrows==0)
 {
-	$message = "false";
+	$message = "Username and/or password incorrect";
 }else{
 	
 	$message = "true";
