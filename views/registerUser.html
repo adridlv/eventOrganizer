@@ -2,11 +2,30 @@
 	<h1>User Registration</h1>
 	<form action="" method="POST">
 		<div class="form-group">
+			<label for="firstname" class="control-label">First name</label>
+			<input type="text" ng-model="user.fname" class="form-control" name="fname" placeholder="First name">
+		</div>
+		<div class="form-group">
+			<label for="email" class="control-label">Email</label>
+			<input type="email" ng-model="user.email" class="form-control" name="email" placeholder="Email">
+		</div>
+		<div class="form-group">
 			<label for="user" class="control-label">Username</label>
 			<input type="text" ng-model="user.username" class="form-control" name="user" placeholder="Username">
 		</div>
 		<div class="form-group">
-			<label for="pass" class="control-label">Password</label><input type="password" ng-model="user.password" class="form-control" name="pass" placeholder="Password">
+			<label for="pass" class="control-label">Password</label>
+			<input type="password" ng-model="user.password" class="form-control" name="pass" placeholder="Password">
+		</div>
+		<div class="form-group">
+			<div class="col-md-12 col-xs-12">
+				<label for="">Card background</label>
+				<div class="button drop-box" ngf-drop ngf-select ng-model="fileuser" name="fileuser" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="3MB">
+				Click or drag and drop here an image for the user image.
+					Recommended 300x300 (16:9)
+				</div>
+				<img ngf-src="fileuser" class="evt-img-preview"/>
+			</div>
 		</div>
 		<!-- <input type="submit" value="Register" name="submit" /> -->
 		<button type="button" class="btn btn-primary" data-ng-click="addNewUser()" name="add">Register</button>

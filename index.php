@@ -21,6 +21,7 @@
 	<footer>
 		<evt-footer></evt-footer>
 	</footer>
+	
 	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-route.min.js"></script>

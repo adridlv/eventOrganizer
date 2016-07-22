@@ -1,7 +1,6 @@
 <div class="event-view">
 	<div ng-repeat="event in events | filter: {name: eventName}:true">
 
-
 		<div class="evt-header-container" ng-style="{'background-image': 'url(upload/{{event.image}})'}">
 		</div>
 
@@ -24,12 +23,15 @@
 				<p class="evt-upper-text">{{event.organizer}}</p>
 				<p class="evt-lower-text">ORGANIZER</p>
 			</div>
-			<button ng-show="showButton(event.organizer, false)" data-ng-click="subscribe()">
+			<div class="text-center">
+			<button class="btn btn-success" ng-show="showButton(event.organizer, false)" data-ng-click="subscribe()">
 			Subscribe to event
 			</button>
-			<button ng-hide="showButton(event.organizer, true)" data-ng-click="unsubscribe()">
+			<button class="btn btn-danger" ng-hide="showButton(event.organizer, true)" data-ng-click="unsubscribe()">
 			Unsubscribe to event
+
 			</button>
+			</div>
 		</div>
 	</div>
 </div>

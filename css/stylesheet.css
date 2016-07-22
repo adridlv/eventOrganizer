@@ -25,6 +25,15 @@ main{
 .navbar.navbar-default li>a:hover{
 	color:white; !important
 }
+.navbar.navbar-default li>a:focus{
+	color:white; !important
+}
+
+.navbar-default .navbar-nav>.active>a{
+	background-color: transparent !important;
+	color:white !important; 
+
+}
 
 .hovereffect {
 	width: 100%;

@@ -3,10 +3,10 @@ $filename = $_FILES['file']['name'];
 $ext = pathinfo($filename, PATHINFO_EXTENSION);
 $meta = $_POST;
 
-$evtname = $meta['event_name'];
-$evtname = str_replace(" ", "", $evtname);
+$name = $meta['textname'];
+$name = str_replace(" ", "", $name);
 
-$destination = "../upload/".$meta['type']."_".$evtname.".".$ext;
+$destination = "../upload/".$meta['type']."_".$name.".".$ext;
 move_uploaded_file( $_FILES['file']['tmp_name'] , $destination);
 
 ?>

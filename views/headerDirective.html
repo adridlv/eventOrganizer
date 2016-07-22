@@ -17,7 +17,10 @@
 		</div>
 		<ul class="nav navbar-nav navbar-left">
 		<!-- <span class="sr-only">(current)</span> -->
-			<li ng-show="checkIfLogged()"><a href="#/register-event">Register Events</a></li>
+			<li ng-show="checkIfLogged()" ng-class="{active: isActive('/')}"><a href="#/">All Events</a></li>
+			<li ng-show="checkIfLogged()" ng-class="{active: isActive('/my-events')}"><a href="#/my-events">My Events</a></li>
+			<li ng-show="checkIfLogged()" ng-class="{active: isActive('/subbed-events')}"><a href="#/subbed-events">Subbed Events</a></li>
+			<li ng-show="checkIfLogged()" ng-class="{active: isActive('/register-event')}"><a href="#/register-event">Register Events</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 		<!-- <span class="sr-only">(current)</span> -->

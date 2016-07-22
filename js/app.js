@@ -20,14 +20,22 @@ app.config(['$routeProvider',function($routeProvider) {
 	})
 	.when("/event/:name",{
 		templateUrl: "views/event.html",
-		controller:"eventManager"
+		controller: "eventManager"
+	})
+	.when("/my-events",{
+		templateUrl: "views/myevents.html",
+		controller: "myEventsManager"
+	})
+	.when("/subbed-events",{
+		templateUrl: "views/events.html",
+		controller: "subbedEventsManager"
 	})
 	.otherwise({
 		redirectTo: "/"
 	})
 }]);
 
-app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$location', function ($scope,$http,$sessionStorage,$location){
+app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$location','Upload', function ($scope,$http,$sessionStorage,$location, Upload){
 	if($sessionStorage.UserConnected)
 		$scope.user = $sessionStorage.UserConnected.username; 
 	else
@@ -36,11 +44,33 @@ app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$loc
 	if($scope.user){
 		$location.url("/");
 	}
+
+	$scope.upload = function (file, name, type) {
+		Upload.upload({
+			url: 'php/uploadImage.php', 
+			method: 'POST',
+			file: file,
+			data: {
+				'textname': name,
+				'type': type
+			}
+		})
+	};
+
 	$scope.message = "";
 	$scope.addNewUser = function(add){
-		$http.post("php/registerUser.php",{'username': $scope.user.username, 'password': $scope.user.password})
+		$http.post("php/registerUser.php",{
+			'username': $scope.user.username, 
+			'password': $scope.user.password,
+			'fname': $scope.user.fname,
+			'email': $scope.user.email,
+			'image': $scope.fileuser.name
+		})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
+			if($scope.message){
+				$scope.upload($scope.fileuser, $scope.user.username, "user");
+			}
 		});
 	};   
 }]);
@@ -58,13 +88,13 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 	$scope.message = "";
 	
 
-	$scope.upload = function (file, eventName, type) {
+	$scope.upload = function (file, name, type) {
 		Upload.upload({
 			url: 'php/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
-				'event_name': eventName,
+				'textname': name,
 				'type': type
 			}
 		})
@@ -117,8 +147,36 @@ app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location'
 }]);
 
 app.controller('dataManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
+	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple', 'user':""})
+	.success (function (data){
+		$scope.events = data;
+	});
+}]);
 
-	$http.get("php/getEventsSQL.php").success (function (data){
+app.controller('subbedEventsManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
+	if($sessionStorage.UserConnected){
+		$scope.user = $sessionStorage.UserConnected.username;
+	}
+
+	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'complex', 'user': $scope.user})
+	.success (function (data){
+		$scope.events = data;
+	});
+}]);
+
+app.controller('myEventsManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
+	if($sessionStorage.UserConnected){
+		$scope.user = $sessionStorage.UserConnected.username;
+	}
+	else
+		$scope.user = false;
+
+	if(!$scope.user){
+		$location.url("/");
+	}
+
+	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple', 'user': $scope.user})
+	.success (function (data){
 		$scope.events = data;
 	});
 }]);
@@ -132,7 +190,8 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 
 	$scope.eventName = $routeParams.name;
 
-	$http.get("php/getEventsSQL.php").success (function (data){
+	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
+	.success (function (data){
 		$scope.events = data;
 	});
 
@@ -188,7 +247,11 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	}
 }]);
 
-app.controller('HeaderManager', ['$scope', '$sessionStorage', function($scope, $sessionStorage){
+app.controller('HeaderManager', ['$scope', '$sessionStorage','$location', function($scope, $sessionStorage, $location){
+	$scope.isActive = function (viewLocation) { 
+		return viewLocation === $location.path();
+	};
+
 	$scope.checkIfLogged = function(){
 		if($sessionStorage.UserConnected)
 			$scope.user = $sessionStorage.UserConnected.username; 
