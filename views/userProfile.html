@@ -1,0 +1,14 @@
+<div class="event-view">
+	<div ng-repeat="user in users | filter: {username: name}:true">
+		<div class="container">
+			{{user}}
+			<button class="btn btn-success" ng-show="showButton(false)" data-ng-click="followUser()">
+				Follow
+			</button>
+
+			<button class="btn btn-danger" ng-hide="showButton(true)" data-ng-click="unfollowUser()">
+				Unfollow
+			</button>
+		</div>
+	</div>
+</div>	

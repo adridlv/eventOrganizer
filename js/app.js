@@ -4,7 +4,7 @@ app.config(['$routeProvider',function($routeProvider) {
 	$routeProvider
 	.when("/",{
 		templateUrl: "views/events.html",
-		controller: "dataManager"
+		controller: "homeManager"
 	})
 	.when("/register-user",{
 		templateUrl: "views/registerUser.html",
@@ -29,6 +29,10 @@ app.config(['$routeProvider',function($routeProvider) {
 	.when("/subbed-events",{
 		templateUrl: "views/events.html",
 		controller: "subbedEventsManager"
+	})
+	.when("/user/:name",{
+		templateUrl: "views/userProfile.html",
+		controller: "userProfileManager"
 	})
 	.otherwise({
 		redirectTo: "/"
@@ -58,6 +62,7 @@ app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$loc
 	};
 
 	$scope.message = "";
+
 	$scope.addNewUser = function(add){
 		$http.post("php/registerUser.php",{
 			'username': $scope.user.username, 
@@ -146,11 +151,74 @@ app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location'
 	};   
 }]);
 
-app.controller('dataManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
+app.controller('homeManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
 	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.events = data;
 	});
+}]);
+
+app.controller('userProfileManager',['$scope','$http','$sessionStorage','$routeParams', function($scope,$http, $sessionStorage,$routeParams){
+	if($sessionStorage.UserConnected){
+		$scope.user = $sessionStorage.UserConnected.username;
+	}
+	else
+		$scope.user = false;
+	/*
+	if($scope.user != $scope.name){
+		$location.url("/");
+	}
+	*/
+
+	$scope.name = $routeParams.name;
+	
+
+	$http.post("php/getEventsSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	.success (function (data){
+		$scope.users = data;
+	});
+
+	$scope.checkIfFollowing = function(){
+		$http.post("php/checkIfFollowing.php",{'user': $scope.user, 'user_following': $scope.name})
+		.success (function (data){
+			$scope.isFollowing = data;
+		});	
+	}
+
+	$scope.checkIfFollowing();
+
+	$scope.followUser = function(){
+		$http.post("php/followUser.php",{'user': $scope.user, 'user_following': $scope.name})
+		.success (function (data){
+			$scope.message = data;
+			$scope.checkIfFollowing();
+		});	
+	}
+
+	$scope.unfollowUser = function(){
+		$http.post("php/unfollowUser.php",{'user': $scope.user, 'user_following': $scope.name})
+		.success (function (data){
+			$scope.checkIfFollowing();
+		});	
+	}
+
+	$scope.showButton = function(unfollow){
+		if(unfollow){
+			if($scope.user == $scope.name || !$scope.user || !$scope.isFollowing)
+				return true;
+			else
+				return false;
+		}else{
+			if($scope.user == $scope.name || !$scope.user || $scope.isFollowing){
+				return false;
+			}
+			else
+				return true;
+		}
+	}
+
+	
+
 }]);
 
 app.controller('subbedEventsManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
@@ -158,7 +226,7 @@ app.controller('subbedEventsManager',['$scope','$http','$sessionStorage', functi
 		$scope.user = $sessionStorage.UserConnected.username;
 	}
 
-	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'complex', 'user': $scope.user})
+	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'subbedEvents', 'user': $scope.user})
 	.success (function (data){
 		$scope.events = data;
 	});
@@ -194,6 +262,28 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	.success (function (data){
 		$scope.events = data;
 	});
+
+	if($scope.user){
+		$http.post("php/getEventsSQL.php",{
+			'table': 'events',
+			'typeQuery': 'getFollowingUsers',
+			'user': $scope.user, 
+			'eventName': $scope.eventName
+		})
+		.success (function (data){
+			$scope.followingUsers = data;
+		});
+
+		$http.post("php/getEventsSQL.php",{
+			'table': 'events',
+			'typeQuery': 'getUnknownUsers',
+			'user': $scope.user, 
+			'eventName': $scope.eventName
+		})
+		.success (function (data){
+			$scope.unknownUsers = data;
+		});
+	}
 
 	$scope.checkIfSuscribed = function(){
 		$http.post("php/checkIfSubscribed.php",{'event_name': $scope.eventName, 'user_name': $scope.user})

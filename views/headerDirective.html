@@ -23,8 +23,9 @@
 			<li ng-show="checkIfLogged()" ng-class="{active: isActive('/register-event')}"><a href="#/register-event">Register Events</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-		<!-- <span class="sr-only">(current)</span> -->
-			<li ng-hide="checkIfLogged()"><a href="#/login">Log in</a></li>
+
+			<li ng-show="checkIfLogged()" ng-class="{active: isActive('/user/{{user}}')}"><a href="#/user/{{user}}">Hello, {{user}}!</a></li>
+			<li ng-hide="checkIfLogged()" ng-class="{active: isActive('/login')}"><a href="#/login">Log in</a></li>
 			<li ng-show="checkIfLogged()"><a href="#/login" ng-click="logout()">Log out</a></li>
 		</ul>
 	</div>
