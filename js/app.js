@@ -6,6 +6,10 @@ app.config(['$routeProvider',function($routeProvider) {
 		templateUrl: "views/events.html",
 		controller: "homeManager"
 	})
+	.when("/users",{
+		templateUrl: "views/users.html",
+		controller: "usersManager"
+	})
 	.when("/register-user",{
 		templateUrl: "views/registerUser.html",
 		controller: "registerUserManager"
@@ -131,6 +135,8 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 	};
 }]);
 
+
+
 app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location', function ($scope,$http,$sessionStorage, $location){
 	
 	if($sessionStorage.UserConnected)
@@ -155,10 +161,23 @@ app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location'
 	};   
 }]);
 
-app.controller('homeManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
+app.controller('homeManager',['$scope','$http', function($scope,$http){
 	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.events = data;
+	});
+}]);
+
+app.controller('usersManager',['$scope','$http','$sessionStorage',function($scope,$http,$sessionStorage){
+	if($sessionStorage.UserConnected){
+		$scope.user = $sessionStorage.UserConnected.username;
+	}
+	else
+		$scope.user = false;
+	
+	$http.post("php/getEventsSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	.success (function (data){
+		$scope.users = data;
 	});
 }]);
 
@@ -236,22 +255,6 @@ app.controller('subbedEventsManager',['$scope','$http','$sessionStorage', functi
 	});
 }]);
 
-
-app.controller('editEventManager',['$scope','$http','$sessionStorage','$routeParams', function($scope,$http, $sessionStorage,$routeParams){
-	if($sessionStorage.UserConnected)
-		$scope.user = $sessionStorage.UserConnected.username; 
-	else
-		$scope.user = false;
-
-	$scope.eventName = $routeParams.name;
-
-	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
-	.success (function (data){
-		$scope.events = data;
-	});
-
-
-}]);
 
 app.controller('myEventsManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
 	if($sessionStorage.UserConnected){

@@ -1,0 +1,10 @@
+<div class="container">
+	<div class="col-md-6 container-user" ng-repeat="user in users | filter:{username: '!'+user}">
+		
+			<div class="container-user-view">
+				<img src="upload/{{user.image}}" alt="">
+				<p>{{user.username | uppercase}}</p>
+				<a class="btn btn-success" href="#/user/{{user.username}}">See user</a>
+			</div>
+	</div>
+</div>

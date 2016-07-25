@@ -319,3 +319,24 @@ select option{
 	opacity: 0.5;
 }
 
+.container-user-view{
+	height: 100px;
+	margin:10px;
+	background: #171F38;
+    border-radius: 1em;
+    overflow: hidden;
+}
+
+.container-user-view img{
+	width: 100px;
+	height: 100px;
+	display: inline-block;
+	border-right: 1px solid black;
+}
+
+.container-user-view p{
+	display: inline-block;
+	font-size: 40px;
+	vertical-align: middle;
+	margin:0 1em;
+}
