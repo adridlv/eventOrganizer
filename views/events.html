@@ -1,4 +1,5 @@
 <div class="container">
+	
 	<div ng-repeat="event in events| filter: {category: music}">
 		<div class="col-md-6">
 			<div class="event" >
@@ -16,5 +17,9 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<div ng-hide="events.length">
+		<p>There are no events registered</p>
 	</div>
 </div>

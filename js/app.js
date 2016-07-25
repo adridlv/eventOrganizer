@@ -1,4 +1,4 @@
-var app = angular.module('dataEvents',['ngRoute', 'ngStorage', 'ngFileUpload']);//en el array inyectamos dependencias
+var app = angular.module('dataEvents', ['ngRoute', 'ngStorage', 'ngFileUpload']);//en el array inyectamos dependencias
 
 app.config(['$routeProvider',function($routeProvider) {
 	$routeProvider
@@ -33,6 +33,10 @@ app.config(['$routeProvider',function($routeProvider) {
 	.when("/user/:name",{
 		templateUrl: "views/userProfile.html",
 		controller: "userProfileManager"
+	})
+	.when("/edit/event/:name",{
+		templateUrl: "views/editEvent.html",
+		controller: "eventManager"
 	})
 	.otherwise({
 		redirectTo: "/"
@@ -232,6 +236,23 @@ app.controller('subbedEventsManager',['$scope','$http','$sessionStorage', functi
 	});
 }]);
 
+
+app.controller('editEventManager',['$scope','$http','$sessionStorage','$routeParams', function($scope,$http, $sessionStorage,$routeParams){
+	if($sessionStorage.UserConnected)
+		$scope.user = $sessionStorage.UserConnected.username; 
+	else
+		$scope.user = false;
+
+	$scope.eventName = $routeParams.name;
+
+	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
+	.success (function (data){
+		$scope.events = data;
+	});
+
+
+}]);
+
 app.controller('myEventsManager',['$scope','$http','$sessionStorage', function($scope,$http, $sessionStorage){
 	if($sessionStorage.UserConnected){
 		$scope.user = $sessionStorage.UserConnected.username;
@@ -249,7 +270,7 @@ app.controller('myEventsManager',['$scope','$http','$sessionStorage', function($
 	});
 }]);
 
-app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams', function($scope,$http, $sessionStorage,$routeParams){
+app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams','Upload', function($scope,$http, $sessionStorage,$routeParams, Upload){
 	
 	if($sessionStorage.UserConnected)
 		$scope.user = $sessionStorage.UserConnected.username; 
@@ -335,6 +356,53 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 			$scope.checkIfSuscribed();
 		});
 	}
+
+	$scope.upload = function (file, name, type) {
+		Upload.upload({
+			url: 'php/uploadImage.php', 
+			method: 'POST',
+			file: file,
+			data: {
+				'textname': name,
+				'type': type
+			}
+		})
+	};
+
+	$scope.update = function(description,price,places,category, file, filebckg){
+		var fileName;
+		var filebckgName;
+
+		if(!file)
+			fileName = "empty";
+		else
+			fileName = file.name;
+
+		if(!filebckg)
+			filebckgName = "empty";
+		else
+			filebckgName = filebckg.name;
+
+		$http.post("php/updateEvent.php",{
+			'user': $scope.user,
+			'name': $scope.eventName,
+			'description': description,
+			'price': price,
+			'places': places,
+			'category':category,
+			'file': fileName,
+			'filebckg': filebckgName
+		})
+		.success(function(data, status, headers, config){
+			$scope.message = data;
+			if(file){
+				$scope.upload(file, $scope.eventName, "img");
+			}
+			if(filebckg){
+				$scope.upload(filebckg, $scope.eventName,"bckg");
+			}
+		});
+	}
 }]);
 
 app.controller('HeaderManager', ['$scope', '$sessionStorage','$location', function($scope, $sessionStorage, $location){
@@ -364,6 +432,10 @@ app.directive("evtHeader", function(){
 		templateUrl: "views/headerDirective.html"
 	}
 });
+
+
+
+
 
 
 

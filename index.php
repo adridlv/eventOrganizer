@@ -26,10 +26,12 @@
 	<script src="js/angular.min.js"></script>
 	<script src="js/angular-route.min.js"></script>
 	<script src="js/ngStorage.min.js"></script>
+	<script src="js/angular-contenteditable.js"></script>
 	<script src="js/ng-file-upload-shim.min.js"></script>
 	<script src="js/ng-file-upload.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/functions.js"></script>
 </body>
 </html>
 

@@ -1,12 +1,11 @@
 <div class="event-view">
 	<div ng-repeat="event in events | filter: {name: eventName}:true">
-
 		<div class="evt-header-container" ng-style="{'background-image': 'url(upload/{{event.image}})'}">
 		</div>
 
 		<div class="container">
 			<h1 class="text-center event-separator">{{event.name | uppercase}}</h1>
-				<p class="event-separator-left">{{event.description}}</p>
+			<p class="event-separator-left">{{event.description}}</p>
 			<div class="evt-key-number">
 				<p class="evt-upper-text">{{event.category}}</p>
 				<p class="evt-lower-text">CATEGORY</p>
@@ -20,26 +19,33 @@
 				<p class="evt-lower-text">PRICE</p>
 			</div>
 			<div class="evt-key-number">
-				<p class="evt-upper-text">{{event.organizer}}</p>
+				<p class="evt-upper-text"> <a href="#/user/{{event.organizer}}">{{event.organizer}}</a></p>
 				<p class="evt-lower-text">ORGANIZER</p>
 			</div>
 			
-			<div ng-repeat="user in followingUsers">
-				{{user}}
-			</div>
-
-			<div ng-repeat="user in unknownUsers">
-				{{user}}
+			<div>
+				<div class="container-users users-following" ng-repeat="user in followingUsers | limitTo:5">
+					<a href="#/user/{{user.username}}">
+						<img src="upload/{{user.image}}" title="{{user.username}}">
+					</a>
+				</div>
+				<div class="container-users users-unknown" ng-repeat="user in unknownUsers | limitTo:5">
+					<a href="#/user/{{user.username}}">
+						<img class="user-img-unknown" src="upload/{{user.image}}" title="{{user.username}}">
+					</a>
+				</div>
 			</div>
 
 			<div class="text-center">
-			<button class="btn btn-success" ng-show="showButton(event.organizer, false)" data-ng-click="subscribe()">
-			Subscribe to event
-			</button>
-			<button class="btn btn-danger" ng-hide="showButton(event.organizer, true)" data-ng-click="unsubscribe()">
-			Unsubscribe to event
-
-			</button>
+				<button class="btn btn-success" ng-show="showButton(event.organizer, false)" data-ng-click="subscribe()">
+					Save
+				</button>
+				<button class="btn btn-danger" ng-hide="showButton(event.organizer, true)" data-ng-click="unsubscribe()">
+					Unsubscribe to event
+				</button>
+				<a href="#/edit/event/{{event.name}}" class="btn btn-info btn-lg" ng-show="event.organizer == user">
+					Edit
+				</a>
 			</div>
 		</div>
 	</div>

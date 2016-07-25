@@ -15,7 +15,7 @@ if($typeQuery == "simple"){
   $resultSQL = mysql_query("SELECT * FROM $table where name in (select event_name from events_participated where user_name = '$user')");
 }else if($typeQuery == "getFollowingUsers"){
 	$eventName = mysql_real_escape_string($data->eventName);
-	$resultSQL = mysql_query("SELECT * FROM USERS WHERE USERNAME IN (SELECT USER_NAME FROM EVENTS_PARTICIPATED where EVENT_NAME = 'alrumbo' AND USER_NAME IN (SELECT USER_FOLLOWING FROM USERS_FOLLOWING WHERE USER = '$user')) AND USERNAME <> '$user'");
+	$resultSQL = mysql_query("SELECT * FROM USERS WHERE USERNAME IN (SELECT USER_NAME FROM EVENTS_PARTICIPATED where EVENT_NAME = '$eventName' AND USER_NAME IN (SELECT USER_FOLLOWING FROM USERS_FOLLOWING WHERE USER = '$user')) AND USERNAME <> '$user'");
 }
 else if($typeQuery == "getUnknownUsers"){
 	$eventName = mysql_real_escape_string($data->eventName);
