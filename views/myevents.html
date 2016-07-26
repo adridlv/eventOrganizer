@@ -1,6 +1,31 @@
 <div class="container">
+	<form>
+		<div class="button-list">
+			<span>
+				<input placeholder="Search by name" type="text" ng-model="nameFilter">
+			</span>
+			<span>
+				<a name="group1" class="btn btn-info" ng-model="eventFilter" ng-click="eventFilter = ''">All</a>
+			</span>
+			<span>
+				<a name="group1" class="btn btn-info" ng-model="eventFilter" value="music" ng-click="eventFilter = 'music'">Music</a>
+			</span>
+			<span>
+				<a name="group1" class="btn btn-info" ng-model="eventFilter" value="theatre" ng-click="eventFilter = 'theatre'">Theatre</a>
+			</span>
+			<span>
+				<a name="group1" class="btn btn-info" ng-model="eventFilter" value="cinema"
+				ng-click="eventFilter = 'cinema'">Cinema</a>
+			</span>
 
-	<div ng-repeat="event in eventsFiltered = (events | filter: {organizer: user})">
+			<span>
+				<a name="group1" class="btn btn-info" ng-model="eventFilter" value="sport"
+				ng-click="eventFilter = 'sport'">Sport</a>
+			</span>
+		</div>
+	</form>
+
+	<div ng-repeat="event in eventsFiltered = (events | filter: {organizer: user, category:eventFilter, name:nameFilter})">
 		<div class="col-md-6">
 			<div class="event" >
 				<div class="hovereffect">

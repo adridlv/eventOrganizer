@@ -24,7 +24,8 @@
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 
-			<li ng-show="checkIfLogged()" ng-class="{active: isActive('/user/{{user}}')}"><a href="#/user/{{user}}">Hello, {{user}}!</a></li>
+			<li ng-show="checkIfLogged()" ng-class="{active: isActive('/user/{{user}}')}"><a href="#/user/{{user}}">Hello, {{user | uppercase}}!</a></li>
+			<li ng-class="{active: isActive('/users')}"><a href="#/users">Users</a></li>
 			<li ng-hide="checkIfLogged()" ng-class="{active: isActive('/login')}"><a href="#/login">Log in</a></li>
 			<li ng-show="checkIfLogged()"><a href="#/login" ng-click="logout()">Log out</a></li>
 		</ul>
