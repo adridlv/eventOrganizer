@@ -156,6 +156,10 @@ main{
 	color:white;
 }
 
+.preserve-linebreaks{
+	white-space:pre-line;
+}
+
 .normalized-text{
 	text-transform:capitalize;
 }
@@ -253,6 +257,7 @@ select option{
 }
 .profile-user-image img{
 	width:100%;
+	height: 100%;
 }
 .user-data{
 	padding-top:6em;
@@ -329,7 +334,7 @@ select option{
 
 .container-user-view img{
 	width: 100px;
-	height: 100px;
+    min-height: 100px;
 	display: inline-block;
 	border-right: 1px solid black;
 }

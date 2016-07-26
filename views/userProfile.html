@@ -1,17 +1,18 @@
 <div class="event-view">
-	<div ng-repeat="user in users | filter: {username: name}:true">
-		<div class="usr-header-container" ng-style="{'background-image': 'url(upload/{{user.image}})'}">
+	<div ng-repeat="userAux in users | filter: {username: name}:true">
+		<div class="usr-header-container" ng-style="{'background-image': 'url(upload/{{userAux.image_background}})'}">
 
 		</div>
 		<div class="container relative-container text-center">
 			
 			<div class="profile-user-image">
-				<img src="upload/{{user.image}}" alt="">
+				<img src="upload/{{userAux.image}}" alt="">
 			</div>
 			<div class="user-data">
-				<p>First name: {{user.name}}</p>
-				<p>Username: {{user.username}}</p>
-				<p>Email: {{user.email}}</p>
+				<p>First name: {{userAux.name}}</p>
+				<p>Last name: {{userAux.last_name}}</p>
+				<p>Username: {{userAux.username}}</p>
+				<p>Email: {{userAux.email}}</p>
 			</div>
 
 			<button class="btn btn-success" ng-show="showButton(false)" data-ng-click="followUser()">
@@ -21,6 +22,11 @@
 			<button class="btn btn-danger" ng-hide="showButton(true)" data-ng-click="unfollowUser()">
 				Unfollow
 			</button>
+
+			<a href="#/edit/user/{{userAux.username}}" class="btn btn-lg btn-info" ng-hide="user != name">
+				Edit
+			</a>
+
 		</div>
 	</div>
 </div>	

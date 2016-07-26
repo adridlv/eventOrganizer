@@ -1,12 +1,12 @@
 <div class="container">
 	
-	<div ng-repeat="event in events| filter: {category: music}">
+	<div ng-repeat="event in eventsFiltered = (events | filter: {category: music})">
 		<div class="col-md-6">
 			<div class="event" >
 				<div class="hovereffect">
 					<img class="event-image" src="upload/{{event.image_background}}" alt="">
 					<div class="overlay">
-						<h2 class="event-name evt-textwhite">{{event.name | uppercase}}</h2>
+						<h2 class="event-name evt-textwhite preserve-linebreaks">{{event.name | uppercase}}</h2>
 						<p class="event-category evt-textwhite">Category: <span class="normalized-text">{{event.category}}</span></p>
 						<p class="event-places evt-textwhite">Places: {{event.places}}</p>
 						<p class="event-organizer evt-textwhite">Organizer: <span class="normalized-text">{{event.organizer}}</span></p>
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 	
-	<div ng-hide="events.length">
+	<div ng-hide="eventsFiltered.length">
 		<p>There are no events registered</p>
 	</div>
 </div>

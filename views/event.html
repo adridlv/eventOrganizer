@@ -1,11 +1,11 @@
 <div class="event-view">
-	<div ng-repeat="event in events | filter: {name: eventName}:true">
+	<div ng-repeat="event in eventsFiltered = (events | filter: {name: eventName}:true)">
 		<div class="evt-header-container" ng-style="{'background-image': 'url(upload/{{event.image}})'}">
 		</div>
 
 		<div class="container">
-			<h1 class="text-center event-separator">{{event.name | uppercase}}</h1>
-			<p class="event-separator-left">{{event.description}}</p>
+			<h1 class="text-center event-separator ">{{event.name | uppercase}}</h1>
+			<p class="event-separator-left preserve-linebreaks">{{event.description}}</p>
 			<div class="evt-key-number">
 				<p class="evt-upper-text">{{event.category}}</p>
 				<p class="evt-lower-text">CATEGORY</p>
@@ -38,7 +38,7 @@
 
 			<div class="text-center">
 				<button class="btn btn-success" ng-show="showButton(event.organizer, false)" data-ng-click="subscribe()">
-					Save
+					Subscribe to event
 				</button>
 				<button class="btn btn-danger" ng-hide="showButton(event.organizer, true)" data-ng-click="unsubscribe()">
 					Unsubscribe to event
@@ -48,5 +48,9 @@
 				</a>
 			</div>
 		</div>
+	</div>
+
+	<div ng-hide="eventsFiltered.length">
+		<p>There are no events registered</p>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 <div class="container">
 
-	<div ng-repeat="event in events | filter: {organizer: user}">
+	<div ng-repeat="event in eventsFiltered = (events | filter: {organizer: user})">
 		<div class="col-md-6">
 			<div class="event" >
 				<div class="hovereffect">
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 	
-	<div ng-hide="events.length">
+	<div ng-hide="eventsFiltered.length">
 		<p>There are no events registered</p>
 	</div>
 </div>

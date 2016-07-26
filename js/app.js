@@ -26,6 +26,10 @@ app.config(['$routeProvider',function($routeProvider) {
 		templateUrl: "views/event.html",
 		controller: "eventManager"
 	})
+	.when("/edit/user/:name",{
+		templateUrl: "views/editUser.html",
+		controller: "editUserManager"
+	})
 	.when("/my-events",{
 		templateUrl: "views/myevents.html",
 		controller: "myEventsManager"
@@ -40,7 +44,7 @@ app.config(['$routeProvider',function($routeProvider) {
 	})
 	.when("/edit/event/:name",{
 		templateUrl: "views/editEvent.html",
-		controller: "eventManager"
+		controller: "editEventManager"
 	})
 	.otherwise({
 		redirectTo: "/"
@@ -76,13 +80,16 @@ app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$loc
 			'username': $scope.user.username, 
 			'password': $scope.user.password,
 			'fname': $scope.user.fname,
+			'lname': $scope.user.lname,
 			'email': $scope.user.email,
-			'image': $scope.fileuser.name
+			'image': $scope.fileuser.name,
+			'image_background':$scope.filebckg.name
 		})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
 			if($scope.message){
 				$scope.upload($scope.fileuser, $scope.user.username, "user");
+				$scope.upload($scope.filebckg, $scope.user.username, "user_bckg");
 			}
 		});
 	};   
@@ -130,6 +137,7 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 			if($scope.message){
 				$scope.upload($scope.file, $scope.event.name, "img");
 				$scope.upload($scope.filebckg, $scope.event.name,"bckg");
+				$location.path("/");
 			}
 		});
 	};
@@ -179,6 +187,76 @@ app.controller('usersManager',['$scope','$http','$sessionStorage',function($scop
 	.success (function (data){
 		$scope.users = data;
 	});
+}]);
+
+app.controller('editUserManager',['$scope','$http','$sessionStorage','$routeParams','Upload','$location', function($scope,$http, $sessionStorage,$routeParams,Upload,$location){
+
+	if($sessionStorage.UserConnected){
+		$scope.userStorage = $sessionStorage.UserConnected.username;
+	}
+	else
+		$scope.userStorage = false;
+
+	$scope.name = $routeParams.name;
+	
+	if($scope.userStorage != $scope.name){
+		$location.url("/");
+	}
+	
+	$http.post("php/getEventsSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	.success (function (data){
+		$scope.users = data;
+	});
+
+	$scope.upload = function (file, name, type) {
+		Upload.upload({
+			url: 'php/uploadImage.php', 
+			method: 'POST',
+			file: file,
+			data: {
+				'textname': name,
+				'type': type
+			}
+		})
+	};
+
+	$scope.message = "";
+
+	$scope.update = function(password,fname,lname,email,fileuser,filebckg){
+		var fileName;
+		var filebckgName;
+
+		if(!fileuser)
+			fileName = "empty";
+		else
+			fileName = fileuser.name;
+
+		if(!filebckg)
+			filebckgName = "empty";
+		else
+			filebckgName = filebckg.name;
+
+		$http.post("php/updateUser.php",{
+			'username': $scope.name, 
+			'password': password,
+			'fname': fname,
+			'lname': lname,
+			'email': email,
+			'image': fileName,
+			'image_background':filebckgName
+		})
+		.success(function(data, status, headers, config){
+
+			if(fileuser){
+				$scope.upload(fileuser, $scope.name, "user");
+				console.log("hecho");
+			}
+			if(filebckg)
+				$scope.upload(filebckg, $scope.name, "user_bckg");
+		});
+	};   
+	
+
 }]);
 
 app.controller('userProfileManager',['$scope','$http','$sessionStorage','$routeParams', function($scope,$http, $sessionStorage,$routeParams){
@@ -359,6 +437,68 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 			$scope.checkIfSuscribed();
 		});
 	}
+
+	$scope.upload = function (file, name, type) {
+		Upload.upload({
+			url: 'php/uploadImage.php', 
+			method: 'POST',
+			file: file,
+			data: {
+				'textname': name,
+				'type': type
+			}
+		})
+	};
+
+	$scope.update = function(description,price,places,category, file, filebckg){
+		var fileName;
+		var filebckgName;
+
+		if(!file)
+			fileName = "empty";
+		else
+			fileName = file.name;
+
+		if(!filebckg)
+			filebckgName = "empty";
+		else
+			filebckgName = filebckg.name;
+
+		$http.post("php/updateEvent.php",{
+			'user': $scope.user,
+			'name': $scope.eventName,
+			'description': description,
+			'price': price,
+			'places': places,
+			'category':category,
+			'file': fileName,
+			'filebckg': filebckgName
+		})
+		.success(function(data, status, headers, config){
+			$scope.message = data;
+			if(file){
+				$scope.upload(file, $scope.eventName, "img");
+			}
+			if(filebckg){
+				$scope.upload(filebckg, $scope.eventName,"bckg");
+			}
+		});
+	}
+}]);
+
+app.controller('editEventManager',['$scope','$http','$sessionStorage','$routeParams','Upload', function($scope,$http, $sessionStorage,$routeParams, Upload){
+	
+	if($sessionStorage.UserConnected)
+		$scope.user = $sessionStorage.UserConnected.username; 
+	else
+		$scope.user = false;
+
+	$scope.eventName = $routeParams.name;
+
+	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
+	.success (function (data){
+		$scope.events = data;
+	});
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({

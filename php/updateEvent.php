@@ -15,7 +15,7 @@ $nameAux = str_replace(" ", "", $name);
 mysql_connect("localhost", "root", "") or die(mysql_error()); 
 mysql_select_db("events_organizer_db") or die(mysql_error());
 
-$query=mysql_query("UPDATE EVENTS SET DESCRIPTION = '$description', PRICE = '$price', PLACES = '$places' AND CATEGORY = '$category' WHERE NAME = '$name'");
+$query=mysql_query("UPDATE EVENTS SET DESCRIPTION = '$description', PRICE = '$price', PLACES = '$places', CATEGORY = '$category' WHERE NAME = '$name'");
 
 if($image != "empty"){
 	$extimg = pathinfo($image, PATHINFO_EXTENSION);
