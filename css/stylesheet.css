@@ -1,23 +1,40 @@
+@font-face {
+	font-family: deliciousFont;
+	src: url("../fonts/Delicious-Roman.otf");
+}
+
 body {
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
-	
+	font-family:deliciousFont;
+	font-size:16px;
 }
 
 main{
 	flex: 1 0 auto;
 	background-color:#171A21;
+	padding-bottom:2em;
 }
 
 form{
 	margin:2em 15px;
 }
 
+/*EVENTS VIEW INPUT*/
 .input-search{
 	padding-left: 0.5em;
 	font-size: 18px;
 	color: black;
+	width:15em;
+	display:inline-block;
+}
+
+/*NAVBAR*/
+
+.navbar-brand img{
+	width: 25px;
+	height: 25px;
 }
 
 .navbar.navbar-default{
@@ -42,9 +59,9 @@ form{
 .navbar-default .navbar-nav>.active>a{
 	background-color: transparent !important;
 	color:white !important; 
-
 }
 
+/*EVENT HOVER*/
 .hovereffect {
 	width: 100%;
 	height: 100%;
@@ -126,6 +143,7 @@ form{
 	transform: translate3d(0,0,0);
 }
 
+/*EVENT CARD*/
 .event{
 	border:1px solid black;
 	height:19em;
@@ -148,50 +166,40 @@ form{
 	text-align:center;
 }
 
-.event-image{
-	width:100%;
-	min-height:20em;
-}
-
-.evt-txtover{
-	width:99%;
-	padding-right:1%;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	color:black;
-}
-
-.evt-textwhite{
-	color:white;
-}
-
-.preserve-linebreaks{
-	white-space:pre-line;
-}
-
-.normalized-text{
-	text-transform:capitalize;
-}
-
 .event .hovereffect .overlay .evt-see-more{
 	border:1px solid white;
 	padding: 0.5em;
 }
 
-.evt-img-preview{
-	max-width:15em;
-	max-height:15em;
-	margin:1em;
+.event-image{
+	width:100%;
+	min-height:20em;
 }
 
-.container-main-view{
-	padding:0;
-	color:white;
+/*EVENT VIEW*/
+.event-separator{
+	padding-bottom:1em;
+	position: relative;
 }
-.event-view{
-	font-size:18px;
+
+.event-separator::after{
+	content: "";
+	display: block;
+	width: 20em;
+	height: 1px;
+	background-color: white;
+	bottom:5px;
+	position: absolute;
+	left: 50%;
+	transform:translateX(-50%);
 }
+
+.event-separator-left{
+	border-left:2px solid #00394F;
+	padding-left:1em;
+}
+
+/*EVENT ITEMS DESCRIPTION*/
 .evt-key-number{
 	display:inline-block;
 	margin:2em;
@@ -217,6 +225,29 @@ form{
 .evt-lower-text{
 	color:#0C96CA;
 }
+
+/*EVENT DESCRIPTION PRESERVE LINE BREAKS*/
+.preserve-linebreaks{
+	white-space:pre-line;
+}
+
+/*CAPITALIZE FIRST LETTER OF STRING*/
+.normalized-text{
+	text-transform:capitalize;
+}
+
+/*MAKE A DIV RELATIVE*/
+.relative-container{
+	position:relative;
+}
+
+/*MAIN VIEW*/
+.container-main-view{
+	padding:0;
+	color:white;
+}
+
+/*INPUTS*/
 .form-control{
 	color:white;
 	border-radius:.8em;
@@ -225,12 +256,16 @@ form{
 	outline:none;
 }
 
+/*SELECT BLACK COLOR FONT*/
 select option{
 	color:black;
 }
 
+/*EVENT REGISTER DRAG IMAGE*/
+
 .evt-drag-image{
 	text-align:center;
+	margin:1em 0;
 }
 
 .evt-drag-image label{
@@ -241,20 +276,23 @@ select option{
 	display:inline-block;
 }
 
+/*FAKE LINK PRETENDING TO BE A BUTTON*/
 .fake-button{
 	vertical-align: bottom;
 }
-.relative-container{
-	position:relative;
-}
+
+/*EVENT AND USER CONTAINER*/
 .evt-header-container,.usr-header-container{
 	min-height:20em;
 	overflow:hidden;
 	background-attachment: fixed;
 	background-size: 100%;
 	background-repeat: no-repeat;
+	box-shadow: 0 4px 5px 0px black;
 }
 
+
+/*USER PROFILE VIEW*/
 .profile-user-image{
 	width:10em;
 	height:10em;
@@ -269,44 +307,27 @@ select option{
 	width:100%;
 	height: 100%;
 }
+
 .user-data{
 	padding-top:6em;
 }
+
 .user-image-header{
 	height:15em;
 	overflow:hidden;
 }
+
 .user-image-header img{
 	width:100%;	
 }
 
+/*REGISTER BUTTON*/
 .button-submit button{
 	margin-top:5em;
 	margin-bottom:2em;
 }
 
-.event-separator{
-	padding-bottom:1em;
-	position: relative;
-}
-
-.event-separator::after{
-	content: "";
-	display: block;
-	width: 20em;
-	height: 1px;
-	background-color: white;
-	bottom:5px;
-	position: absolute;
-	left: 50%;
-	transform:translateX(-50%);
-}
-
-.event-separator-left{
-	border-left:2px solid #00394F;
-	padding-left:1em;
-}
-
+/*EVENT FOLLOWERS*/
 .container-users{
 	display:inline-block;
 	width:50px;
@@ -334,6 +355,7 @@ select option{
 	opacity: 0.5;
 }
 
+/*USERS CARDS*/
 .container-user-view{
 	height: 12em;
 	position: relative;
@@ -364,12 +386,27 @@ select option{
 	bottom: 5%;
 	font-size: 2em;
 }
+
 .container-user-view a{
 	position: absolute;
 	right: 10%;
 	bottom: 10%;
 }
+
+/*ERROR CLASS */
 .error-input{
 	color:red;
 	font-weight:bold;
+}
+
+.hidden-text{
+	display:none;
+}
+
+/*FOOTER*/
+
+.center-right-footer{
+	bottom: 0;
+	position: absolute;
+	right: 1em;
 }

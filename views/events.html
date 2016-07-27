@@ -2,7 +2,7 @@
 	<form>
 		<div class="button-list">
 			<span>
-				<input placeholder="Search by name" type="text" ng-model="nameFilter" class="input-search">
+				<input placeholder="Search by name" type="text" ng-model="nameFilter" class="input-search form-control">
 			</span>
 			<div class="pull-right">
 				<span>
@@ -46,7 +46,7 @@
 		</div>
 	</div>
 	
-	<div ng-hide="eventsFiltered.length">
+	<div class="hidden-text" ng-hide="eventsFiltered.length">
 		<p>There are no events registered</p>
 	</div>
 </div>
