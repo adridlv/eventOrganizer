@@ -1,10 +1,12 @@
 <div class="container">
 	<form>
 		<div class="button-list">
-			<span>
-				<input placeholder="Search by name" type="text" ng-model="nameFilter" class="input-search form-control">
-			</span>
-			<div class="pull-right">
+			<div class="col-md-6 col-xs-12">
+				<span>
+				<input placeholder="Search by name" type="text" ng-model="nameFilter" class="form-control">
+				</span>
+			</div>
+			<div class="col-md-6 col-xs-12">
 				<span>
 					<a name="group1" class="btn btn-info" ng-model="eventFilter" ng-click="eventFilter = ''">All</a>
 				</span>
@@ -28,7 +30,7 @@
 	</form>
 
 	<div ng-repeat="event in eventsFiltered = (events | filter: {organizer: userFilter, category: eventFilter, name: nameFilter})">
-		<div class="col-md-6">
+		<div class="col-md-6 col-xs-12">
 			<div class="event" >
 				<div class="hovereffect">
 					<img class="event-image" src="upload/{{event.image_background}}" alt="">
@@ -46,7 +48,7 @@
 		</div>
 	</div>
 	
-	<div class="hidden-text" ng-hide="eventsFiltered.length">
+	<div class="hidden-text" ng-show="!eventsFiltered.length">
 		<p>There are no events registered</p>
 	</div>
 </div>

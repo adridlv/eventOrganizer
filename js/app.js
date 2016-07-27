@@ -67,13 +67,13 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 		$scope.userFilter = $scope.user;
 	}
 
-	$http.post("php/getSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
+	$http.post("php/getData/getSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
 	.success (function (data){
 		$scope.events = data;
 	});
 
 	if($scope.user){
-		$http.post("php/getSQL.php",{
+		$http.post("php/getData/getSQL.php",{
 			'table': 'events',
 			'typeQuery': 'getFollowingUsers',
 			'user': $scope.user, 
@@ -83,7 +83,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 			$scope.followingUsers = data;
 		});
 
-		$http.post("php/getSQL.php",{
+		$http.post("php/getData/getSQL.php",{
 			'table': 'events',
 			'typeQuery': 'getUnknownUsers',
 			'user': $scope.user, 
@@ -95,14 +95,14 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	}
 
 	$scope.checkIfSuscribed = function(){
-		$http.post("php/checkIfSubscribed.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
+		$http.post("php/check/checkIfSubscribed.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
 		.success (function (data){
 			$scope.isSuscribed = data;
 		});	
 	}
 
 	$scope.checkIfHasPlaces = function(){
-		$http.post("php/checkIfHasPlaces.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
+		$http.post("php/check/checkIfHasPlaces.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
 		.success (function (data){
 			$scope.places = data;
 			$scope.hasPlaces = data.hasPlaces;
@@ -128,7 +128,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	}
 
 	$scope.subscribe = function(){
-		$http.post("php/subscribe.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
+		$http.post("php/subscribe/subscribe.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
 			$scope.checkIfHasPlaces();
@@ -137,7 +137,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 	}
 
 	$scope.unsubscribe = function(){
-		$http.post("php/unsubscribe.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
+		$http.post("php/subscribe/unsubscribe.php",{'event_name': $scope.eventName, 'user_name': $scope.user})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
 			$scope.checkIfHasPlaces();
@@ -147,7 +147,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/uploadImage.php', 
+			url: 'php/image/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -171,7 +171,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 		else
 			filebckgName = filebckg.name;
 
-		$http.post("php/updateEvent.php",{
+		$http.post("php/update/updateEvent.php",{
 			'user': $scope.user,
 			'name': $scope.eventName,
 			'description': description,
@@ -204,11 +204,12 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 	if(!$scope.user){
 		$location.url("/");
 	}
+
 	$scope.message = "";
 	
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/uploadImage.php', 
+			url: 'php/image/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -219,7 +220,7 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 	};
 
 	$scope.addNewEvent = function(add){
-		$http.post("php/registerEvent.php",
+		$http.post("php/register/registerEvent.php",
 		{
 			'user': $sessionStorage.UserConnected.username, 
 			'name': $scope.event.name, 
@@ -246,7 +247,7 @@ app.controller('subbedEventsManager',['$scope','$http','$sessionStorage', functi
 		$scope.user = $sessionStorage.UserConnected.username;
 	}
 
-	$http.post("php/getSQL.php",{'table': 'events', 'typeQuery': 'subbedEvents', 'user': $scope.user})
+	$http.post("php/getData/getSQL.php",{'table': 'events', 'typeQuery': 'subbedEvents', 'user': $scope.user})
 	.success (function (data){
 		$scope.events = data;
 	});
@@ -261,14 +262,14 @@ app.controller('editEventManager',['$scope','$http','$sessionStorage','$routePar
 
 	$scope.eventName = $routeParams.name;
 
-	$http.post("php/getSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
+	$http.post("php/getData/getSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
 	.success (function (data){
 		$scope.events = data;
 	});
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/uploadImage.php', 
+			url: 'php/image/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -292,7 +293,7 @@ app.controller('editEventManager',['$scope','$http','$sessionStorage','$routePar
 		else
 			filebckgName = filebckg.name;
 
-		$http.post("php/updateEvent.php",{
+		$http.post("php/update/updateEvent.php",{
 			'user': $scope.user,
 			'name': $scope.eventName,
 			'description': description,
@@ -321,7 +322,7 @@ app.controller('usersManager',['$scope','$http','$sessionStorage',function($scop
 	else
 		$scope.user = false;
 	
-	$http.post("php/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	$http.post("php/getData/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.users = data;
 	});
@@ -333,22 +334,16 @@ app.controller('userProfileManager',['$scope','$http','$sessionStorage','$routeP
 	}
 	else
 		$scope.user = false;
-	/*
-	if($scope.user != $scope.name){
-		$location.url("/");
-	}
-	*/
 
 	$scope.name = $routeParams.name;
 	
-
-	$http.post("php/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	$http.post("php/getData/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.users = data;
 	});
 
 	$scope.checkIfFollowing = function(){
-		$http.post("php/checkIfFollowing.php",{'user': $scope.user, 'user_following': $scope.name})
+		$http.post("php/check/checkIfFollowing.php",{'user': $scope.user, 'user_following': $scope.name})
 		.success (function (data){
 			$scope.isFollowing = data;
 		});	
@@ -357,7 +352,7 @@ app.controller('userProfileManager',['$scope','$http','$sessionStorage','$routeP
 	$scope.checkIfFollowing();
 
 	$scope.followUser = function(){
-		$http.post("php/followUser.php",{'user': $scope.user, 'user_following': $scope.name})
+		$http.post("php/subscribe/followUser.php",{'user': $scope.user, 'user_following': $scope.name})
 		.success (function (data){
 			$scope.message = data;
 			$scope.checkIfFollowing();
@@ -365,7 +360,7 @@ app.controller('userProfileManager',['$scope','$http','$sessionStorage','$routeP
 	}
 
 	$scope.unfollowUser = function(){
-		$http.post("php/unfollowUser.php",{'user': $scope.user, 'user_following': $scope.name})
+		$http.post("php/subscribe/unfollowUser.php",{'user': $scope.user, 'user_following': $scope.name})
 		.success (function (data){
 			$scope.checkIfFollowing();
 		});	
@@ -401,14 +396,14 @@ app.controller('editUserManager',['$scope','$http','$sessionStorage','$routePara
 		$location.url("/");
 	}
 	
-	$http.post("php/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	$http.post("php/getData/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.users = data;
 	});
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/uploadImage.php', 
+			url: 'php/image/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -434,7 +429,7 @@ app.controller('editUserManager',['$scope','$http','$sessionStorage','$routePara
 		else
 			filebckgName = filebckg.name;
 
-		$http.post("php/updateUser.php",{
+		$http.post("php/update/updateUser.php",{
 			'username': $scope.name, 
 			'password': password,
 			'fname': fname,
@@ -447,12 +442,11 @@ app.controller('editUserManager',['$scope','$http','$sessionStorage','$routePara
 
 			if(fileuser){
 				$scope.upload(fileuser, $scope.name, "user");
-				console.log("hecho");
 			}
 			if(filebckg)
 				$scope.upload(filebckg, $scope.name, "user_bckg");
 
-			$location.path("/");
+			$location.path("/user/"+$scope.name);
 		});
 	};   
 }]);
@@ -469,7 +463,7 @@ app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$loc
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/uploadImage.php', 
+			url: 'php/image/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -482,7 +476,7 @@ app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$loc
 	$scope.message = "";
 
 	$scope.addNewUser = function(add){
-		$http.post("php/registerUser.php",{
+		$http.post("php/register/registerUser.php",{
 			'username': $scope.user.username, 
 			'password': $scope.user.password,
 			'fname': $scope.user.fname,
@@ -515,7 +509,7 @@ app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location'
 
 	$scope.message = "";
 	$scope.login = function(){
-		$http.post("php/login.php",{'username': $scope.user.username, 'password': $scope.user.password})
+		$http.post("php/login/login.php",{'username': $scope.user.username, 'password': $scope.user.password})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
 			if(data == "true"){

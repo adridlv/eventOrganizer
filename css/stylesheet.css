@@ -146,6 +146,7 @@ form{
 /*EVENT CARD*/
 .event{
 	border:1px solid black;
+	min-height:10em;
 	height:19em;
 	background-repeat: no-repeat;
 	background-size:100%;
@@ -321,6 +322,10 @@ select option{
 	width:100%;	
 }
 
+/*FILTER*/
+.button-list div{
+	margin:1em 0;
+}
 /*REGISTER BUTTON*/
 .button-submit button{
 	margin-top:5em;
@@ -404,7 +409,6 @@ select option{
 }
 
 /*FOOTER*/
-
 .center-right-footer{
 	bottom: 0;
 	position: absolute;
