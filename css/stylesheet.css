@@ -11,7 +11,13 @@ main{
 }
 
 form{
-	margin:2em;
+	margin:2em 15px;
+}
+
+.input-search{
+	padding-left: 0.5em;
+	font-size: 18px;
+	color: black;
 }
 
 .navbar.navbar-default{
@@ -330,35 +336,36 @@ select option{
 
 .container-user-view{
 	height: 12em;
-    position: relative;
-    background-size: 100% 50%;
-    background-repeat: no-repeat;
-    /* background-color: white; */
-    margin: 1em 0;
-    border: 1px solid white;
-    border-radius: 1em;
-    background-color: rgba(0,0,0,0.5);
+	position: relative;
+	background-size: 100% 50%;
+	background-repeat: no-repeat;
+	/* background-color: white; */
+	margin: 1em 0;
+	border: 1px solid white;
+	border-radius: 1em;
+	background-color: rgba(0,0,0,0.5);
 }
 
 .container-user-view img{
-	border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 50px;
+	border-radius: 0.5em;
+	border: 2px solid white;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 50px;
 }
 
 .container-user-view p{
 	position: absolute;
-    left: 5%;
-    transform: translatex(-5%);
-    bottom: 10%;
-    font-size: 2em;
+	left: 5%;
+	transform: translatex(-5%);
+	bottom: 5%;
+	font-size: 2em;
 }
 .container-user-view a{
 	position: absolute;
-    right: 10%;
-    bottom: 10%;
+	right: 10%;
+	bottom: 10%;
 }

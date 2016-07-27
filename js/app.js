@@ -31,8 +31,8 @@ app.config(['$routeProvider',function($routeProvider) {
 		controller: "editUserManager"
 	})
 	.when("/my-events",{
-		templateUrl: "views/myevents.html",
-		controller: "myEventsManager"
+		templateUrl: "views/events.html",
+		controller: "eventManager"
 	})
 	.when("/subbed-events",{
 		templateUrl: "views/events.html",
@@ -170,7 +170,7 @@ app.controller('loginManager', ['$scope','$http', '$sessionStorage', '$location'
 }]);
 
 app.controller('homeManager',['$scope','$http', function($scope,$http){
-	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple', 'user':""})
+	$http.post("php/getSQL.php",{'table': 'events', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.events = data;
 	});
@@ -183,7 +183,7 @@ app.controller('usersManager',['$scope','$http','$sessionStorage',function($scop
 	else
 		$scope.user = false;
 	
-	$http.post("php/getEventsSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	$http.post("php/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.users = data;
 	});
@@ -203,7 +203,7 @@ app.controller('editUserManager',['$scope','$http','$sessionStorage','$routePara
 		$location.url("/");
 	}
 	
-	$http.post("php/getEventsSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	$http.post("php/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.users = data;
 	});
@@ -274,7 +274,7 @@ app.controller('userProfileManager',['$scope','$http','$sessionStorage','$routeP
 	$scope.name = $routeParams.name;
 	
 
-	$http.post("php/getEventsSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
+	$http.post("php/getSQL.php",{'table': 'users', 'typeQuery': 'simple', 'user':""})
 	.success (function (data){
 		$scope.users = data;
 	});
@@ -327,7 +327,7 @@ app.controller('subbedEventsManager',['$scope','$http','$sessionStorage', functi
 		$scope.user = $sessionStorage.UserConnected.username;
 	}
 
-	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'subbedEvents', 'user': $scope.user})
+	$http.post("php/getSQL.php",{'table': 'events', 'typeQuery': 'subbedEvents', 'user': $scope.user})
 	.success (function (data){
 		$scope.events = data;
 	});
@@ -345,14 +345,15 @@ app.controller('myEventsManager',['$scope','$http','$sessionStorage', function($
 		$location.url("/");
 	}
 
-	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple', 'user': $scope.user})
+	$http.post("php/getSQL.php",{'table': 'events', 'typeQuery': 'simple', 'user': $scope.user})
 	.success (function (data){
 		$scope.events = data;
 	});
 }]);
 
-app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams','Upload', function($scope,$http, $sessionStorage,$routeParams, Upload){
+app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams','Upload','$location', function($scope,$http, $sessionStorage,$routeParams, Upload, $location){
 	
+
 	if($sessionStorage.UserConnected)
 		$scope.user = $sessionStorage.UserConnected.username; 
 	else
@@ -360,13 +361,17 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 
 	$scope.eventName = $routeParams.name;
 
-	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
+	if($location.path() === "/my-events"){
+		$scope.userFilter = $scope.user;
+	}
+
+	$http.post("php/getSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
 	.success (function (data){
 		$scope.events = data;
 	});
 
 	if($scope.user){
-		$http.post("php/getEventsSQL.php",{
+		$http.post("php/getSQL.php",{
 			'table': 'events',
 			'typeQuery': 'getFollowingUsers',
 			'user': $scope.user, 
@@ -376,7 +381,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 			$scope.followingUsers = data;
 		});
 
-		$http.post("php/getEventsSQL.php",{
+		$http.post("php/getSQL.php",{
 			'table': 'events',
 			'typeQuery': 'getUnknownUsers',
 			'user': $scope.user, 
@@ -495,7 +500,7 @@ app.controller('editEventManager',['$scope','$http','$sessionStorage','$routePar
 
 	$scope.eventName = $routeParams.name;
 
-	$http.post("php/getEventsSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
+	$http.post("php/getSQL.php",{'table': 'events', 'typeQuery': 'simple','user': $scope.user})
 	.success (function (data){
 		$scope.events = data;
 	});

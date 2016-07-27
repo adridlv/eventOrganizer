@@ -24,16 +24,20 @@
 			</div>
 			
 			<div>
+				
 				<div class="container-users users-following" ng-repeat="user in followingUsers | limitTo:5">
 					<a href="#/user/{{user.username}}">
 						<img src="upload/{{user.image}}" title="{{user.username}}">
 					</a>
 				</div>
+				<p ng-show="followingUsers.length">Users you are following who subscribed to this event</p>
+				
 				<div class="container-users users-unknown" ng-repeat="user in unknownUsers | limitTo:5">
 					<a href="#/user/{{user.username}}">
 						<img class="user-img-unknown" src="upload/{{user.image}}" title="{{user.username}}">
 					</a>
 				</div>
+				<p ng-show="unknownUsers.length">Users who subscribed to this event</p>
 			</div>
 
 			<div class="text-center">
