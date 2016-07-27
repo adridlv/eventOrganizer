@@ -90,6 +90,7 @@ app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$loc
 			if($scope.message){
 				$scope.upload($scope.fileuser, $scope.user.username, "user");
 				$scope.upload($scope.filebckg, $scope.user.username, "user_bckg");
+				$location.path("/");
 			}
 		});
 	};   
@@ -134,7 +135,7 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 		})
 		.success(function(data, status, headers, config){
 			$scope.message = data;
-			if($scope.message){
+			if($scope.message == true){
 				$scope.upload($scope.file, $scope.event.name, "img");
 				$scope.upload($scope.filebckg, $scope.event.name,"bckg");
 				$location.path("/");
@@ -253,6 +254,8 @@ app.controller('editUserManager',['$scope','$http','$sessionStorage','$routePara
 			}
 			if(filebckg)
 				$scope.upload(filebckg, $scope.name, "user_bckg");
+
+			$location.path("/");
 		});
 	};   
 	
@@ -487,6 +490,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 			if(filebckg){
 				$scope.upload(filebckg, $scope.eventName,"bckg");
 			}
+			$location.path("/");
 		});
 	}
 }]);

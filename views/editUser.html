@@ -1,25 +1,29 @@
 <div class="container">
 	
 	<div ng-repeat="user in users | filter: {username: name}:true">
-	<h1>Username: {{user.username}}</h1>
+		<h1>Username: {{user.username}}</h1>
 
-		<form action="" method="POST">
+		<form name="usrform" action="" method="POST">
 			<div class="form-group">
 				<label for="fname" class="control-label">First name</label>
-				<input type="text" ng-model="user.name" class="form-control" name="fname" placeholder="First name">
+				<input type="text" ng-model="user.name" class="form-control" name="fname" placeholder="First name" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[a-zA-Z]+$/" required>
+				<span class="error-input" ng-show="usrform.fname.$error.pattern">First name must contain only letters.</span>
 			</div>
 			<div class="form-group">
 				<label for="lname" class="control-label">Last name</label>
-				<input type="text" ng-model="user.last_name" class="form-control" name="lname" placeholder="Last name">
+				<input type="text" ng-model="user.last_name" class="form-control" name="lname" placeholder="Last name" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[a-zA-Z]+$/" required>
+				<span class="error-input" ng-show="usrform.lname.$error.pattern">Last name must contain only letters.</span>
 			</div>
 			<div class="form-group">
 				<label for="email" class="control-label">Email</label>
 				<input type="email" ng-model="user.email" class="form-control" name="email" placeholder="Email">
+				<span class="error-input" ng-show="usrform.email.$invalid">Use the next email format: example@example.com</span>
 			</div>
 
 			<div class="form-group">
 				<label for="pass" class="control-label">Password</label>
-				<input type="password" ng-model="user.password" class="form-control" name="pass" placeholder="Password">
+				<input type="password" ng-model="user.password" class="form-control" name="pass" placeholder="Password" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[a-zA-Z-0-9]+$/" required>
+				<span class="error-input" ng-show="usrform.pass.$error.pattern">Password must contain only letters and numbers.</span>
 			</div>
 			<div class="form-group">
 				<div class="col-md-6 col-xs-12">
@@ -29,6 +33,8 @@
 						Recommended 300x300 (16:9)
 					</div>
 					<img ngf-src="fileuser" class="evt-img-preview"/>
+
+					<span class="error-input" ng-show="usrform.fileuser.$invalid">Image is required.</span>
 				</div>
 				<div class="col-md-6 col-xs-12">
 					<label for="">Card background</label>
@@ -37,12 +43,15 @@
 						Recommended 1280x720 (16:9)
 					</div>
 					<img ngf-src="filebckg" class="evt-img-preview"/>
+
+					<span class="error-input" ng-show="usrform.filebckg.$invalid">Image is required.</span>
 				</div>
 			</div>
-
-			<button type="button" class="btn btn-lg btn-info" 
-			data-ng-click="update(user.password,user.name,user.last_name,user.email,fileuser,filebckg)" 
-			name="add">Update</button>
+			<div class="text-center button-submit">
+				<button type="button" class="btn btn-lg btn-info" 
+				data-ng-click="update(user.password,user.name,user.last_name,user.email,fileuser,filebckg)" 
+				name="add">Update</button>
+			</div>
 		</form>
 	</div>
 

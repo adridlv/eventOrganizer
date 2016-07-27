@@ -30,7 +30,7 @@ if($numrows==0)
 
 	$message = true;
 }else{
-	$message = false;
+	$message = "Name of the event already exists";
 }
 	echo $message;
 ?>

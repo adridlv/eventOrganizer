@@ -369,3 +369,7 @@ select option{
 	right: 10%;
 	bottom: 10%;
 }
+.error-input{
+	color:red;
+	font-weight:bold;
+}
