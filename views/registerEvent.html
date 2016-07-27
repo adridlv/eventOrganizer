@@ -2,7 +2,7 @@
 	<form name="evtform" action="" method="POST">
 		<div class="form-group">
 			<label for="event.name" class="control-label">Name</label>
-			<input type="text" ng-model="event.name" name="name" placeholder="Event name" class="form-control" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[a-zA-Z]+$/" required>
+			<input type="text" ng-model="event.name" name="name" placeholder="Event name" class="form-control" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[a-zA-Z]+$/"  maxlength="50" required>
 			<span class="error-input" ng-show="evtform.name.$error.pattern">Name must contain only letters.</span>
 		</div>
 
@@ -12,13 +12,13 @@
 		</div>
 		<div class="form-group">
 			<label for="price" class="control-label">Price</label>
-			<input type="number" ng-model="event.price" name="price" class="form-control" placeholder="Price in €" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[0-9]+$/" min="0" required>
+			<input type="number" ng-model="event.price" name="price" class="form-control" placeholder="Price in €" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[0-9]+$/"  maxlength="12" min="0" required>
 			<span class="error-input" ng-show="evtform.price.$error.pattern">Price must contain only numbers.</span>
 		</div>
 
 		<div class="form-group">
 			<label for="places" class="control-label">Places</label>
-			<input type="number" ng-model="event.places" name="places" class="form-control" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[0-9]+$/" min="1" required>
+			<input type="number" ng-model="event.places" name="places" class="form-control" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[0-9]+$/" maxlength="12" min="1" required>
 			<span class="error-input" ng-show="evtform.places.$error.pattern">Places must contain only numbers.</span>
 		</div>
 

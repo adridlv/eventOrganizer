@@ -325,7 +325,9 @@ select option{
 /*FILTER*/
 .button-list div{
 	margin:1em 0;
+    text-align: center;
 }
+
 /*REGISTER BUTTON*/
 .button-submit button{
 	margin-top:5em;
