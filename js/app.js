@@ -147,7 +147,7 @@ app.controller('eventManager',['$scope','$http','$sessionStorage','$routeParams'
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/image/uploadImage.php', 
+			url: 'php/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -209,7 +209,7 @@ app.controller('registerEventManager', ['$scope','$http','$sessionStorage','$loc
 	
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/image/uploadImage.php', 
+			url: 'php/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -269,7 +269,7 @@ app.controller('editEventManager',['$scope','$http','$sessionStorage','$routePar
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/image/uploadImage.php', 
+			url: 'php/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -403,7 +403,7 @@ app.controller('editUserManager',['$scope','$http','$sessionStorage','$routePara
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/image/uploadImage.php', 
+			url: 'php/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {
@@ -463,7 +463,7 @@ app.controller('registerUserManager', ['$scope','$http','$sessionStorage', '$loc
 
 	$scope.upload = function (file, name, type) {
 		Upload.upload({
-			url: 'php/image/uploadImage.php', 
+			url: 'php/uploadImage.php', 
 			method: 'POST',
 			file: file,
 			data: {

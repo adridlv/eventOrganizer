@@ -277,6 +277,10 @@ select option{
 	display:inline-block;
 }
 
+.evt-img-preview{
+	width: 200px;
+}
+
 /*FAKE LINK PRETENDING TO BE A BUTTON*/
 .fake-button{
 	vertical-align: bottom;

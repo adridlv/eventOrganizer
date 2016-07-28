@@ -2,7 +2,7 @@
 	<form name="evtform" action="" method="POST">
 		<div class="form-group">
 			<label for="event.name" class="control-label">Name</label>
-			<input type="text" ng-model="event.name" name="name" placeholder="Event name" class="form-control" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[a-zA-Z]+$/"  maxlength="50" required>
+			<input type="text" ng-model="event.name" name="name" placeholder="Event name" class="form-control" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[a-zA-Z ]+$/"  maxlength="50" required>
 			<span class="error-input" ng-show="evtform.name.$error.pattern">Name must contain only letters.</span>
 		</div>
 
